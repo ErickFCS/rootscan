@@ -1,0 +1,30 @@
+name: Rust
+
+on:
+  push:
+    branches: ["main"]
+    tags:
+      - "v*"
+  pull_request:
+    branches: ["main"]
+  workflow_dispatch:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run tests
+        run: cargo test --verbose
+      - name: Build
+        run: cargo build --verbose --release
+      - name: GH Release
+        uses: softprops/action-gh-release@v3.0.3
+        if: github.ref_type == 'tag'
+        with:
+          working_directory: target/release
+          files: rootscan
