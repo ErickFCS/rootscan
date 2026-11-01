@@ -1,0 +1,19 @@
+[package]
+name = "rootscan"
+version = "0.1.0"
+edition = "2021"
+description = "Fast filesystem structure scanner: tracks paths under a root folder, honoring gitignore-like rules."
+license = "MIT"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+humantime = "2"
+ignore = "0.4"
+indexmap = "2"
+serde_json = { version = "1", features = ["preserve_order"] }
+serde_yaml = "0.9"
+thiserror = "2"
+
+[profile.release]
+lto = true
+codegen-units = 1
